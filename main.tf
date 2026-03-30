@@ -5,7 +5,7 @@ module "vpc" {
 
   env          = var.env
   vpc_cidr     = each.value["vpc_cidr"]
-  project_name = each.value["project_name"]
+  project_name = var.project_name
 
 
   public_subnets_cidr = each.value["public_subnets_cidr"]
