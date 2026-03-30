@@ -1,0 +1,45 @@
+format_version: 10
+pipelines:
+  RoboShop_TerraformDestroy:
+    group: defaultGroup
+    label_template: ${COUNT}
+    lock_behavior: none
+    display_order: -1
+    materials:
+      ansible:
+        git: https://github.com/kn-10/roboshop-terraform.git
+        shallow_clone: false
+        auto_update: true
+        branch: main
+    stages:
+      - DEV:
+          fetch_materials: true
+          clean_workspace: false
+          approval:
+            type: manual
+          jobs:
+            deployment:
+              timeout: 0
+              tasks:
+                - exec:
+                    command: terraform
+                    arguments: ["init", "-backend-config=env-dev/state.tfvars"]
+
+                - exec:
+                    command: terraform
+                    arguments: [ "destroy", "-var-file=env-dev/main.tfvars", "-auto-approve" ]
+
+#      - PROD:
+#          fetch_materials: true
+#          clean_workspace: false
+#          jobs:
+#            deployment:
+#              timeout: 0
+#              tasks:
+#                - exec:
+#                    command: terraform
+#                    arguments: [ "init", "-backend-config=env-prod/state.tfvars" ]
+#
+#                - exec:
+#                    command: terraform
+#                    arguments: [ "destroy", "-var-file=env-prod/main.tfvars", "-auto-approve" ]
