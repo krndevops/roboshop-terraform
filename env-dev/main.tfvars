@@ -1,4 +1,4 @@
-env ="dev"
+env = "dev"
 project_name = "roboshop"
 kms_key_id = "arn:aws:kms:us-east-1:367241114876:key/b0eaa327-c037-47e6-93ed-78b8b08219b9"
 bastion_cidrs = ["172.31.65.60/32"]
@@ -18,13 +18,13 @@ vpc = {
 }
 
 rds = {
-  main = {
-    allocated_storage      = 10
-    db_name                = "roboshop"
-    engine                 = "mysql"
-    engine_version         = "5.7"
-    instance_class         = "db.t3.micro"
-    parameter_group_family = "mysql5.7"
-  }
+  # main = {
+  #   allocated_storage      = 10
+  #   db_name                = "roboshop"
+  #   engine                 = "mysql"
+  #   engine_version         = "5.7"
+  #   instance_class         = "db.t3.micro"
+  #   parameter_group_family = "mysql5.7"
+  # }
 }
 

@@ -9,7 +9,7 @@ module "vpc" {
 
 
   public_subnets_cidr = each.value["public_subnets_cidr"]
-  web_subnets_cidr    = each.value["web_subnets_cidr "]
+  web_subnets_cidr    = each.value["web_subnets_cidr"]
   app_subnets_cidr    = each.value["app_subnets_cidr"]
   db_subnets_cidr     = each.value["db_subnets_cidr"]
   az                  = each.value["az"]
