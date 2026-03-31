@@ -71,7 +71,7 @@ module "rds" {
  kms  = var.kms_key_id
  project_name = var.project_name
 
- subnets  = lookup(lookup(module.vpc, "main", null), "db_subnets_ids", null)
+ subnets  = lookup(lookup(module.vpc, "main", null), "db_subnets_id", null)
  vpc_id   = lookup(lookup(module.vpc, "main", null), "vpc_id", null)
  sg_cidrs = lookup(lookup(var.vpc, "main", null), "app_subnets_cidr", null)
 
@@ -93,7 +93,7 @@ module "elasticache" {
  kms  = var.kms_key_id
  project_name = var.project_name
 
- subnets  = lookup(lookup(module.vpc, "main", null), "db_subnets_ids", null)
+ subnets  = lookup(lookup(module.vpc, "main", null), "db_subnets_id", null)
  vpc_id   = lookup(lookup(module.vpc, "main", null), "vpc_id", null)
  sg_cidrs = lookup(lookup(var.vpc, "main", null), "app_subnets_cidr", null)
 
@@ -112,7 +112,7 @@ module "rabbitmq" {
  route53_zone_id = var.zone_id
  project_name = var.project_name
 
- subnets  = lookup(lookup(module.vpc, "main", null), "db_subnets_ids", null)
+ subnets  = lookup(lookup(module.vpc, "main", null), "db_subnets_id", null)
  vpc_id   = lookup(lookup(module.vpc, "main", null), "vpc_id", null)
  sg_cidrs = lookup(lookup(var.vpc, "main", null), "app_subnets_cidr", null)
 
