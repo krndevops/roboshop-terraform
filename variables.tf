@@ -5,3 +5,4 @@ variable "bastion_cidrs" {}
 variable "prometheus_cidrs" {}
 variable "vpc" {}
 variable "eks" {}
+variable "docdb" {}

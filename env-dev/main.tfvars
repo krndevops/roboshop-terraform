@@ -31,3 +31,12 @@ eks = {
   }
 }
 
+docdb = {
+  main = {
+    engine                 = "docdb"
+    engine_version         = "4.0.0"
+    instance_class         = "db.t3.medium"
+    parameter_group_family = "docdb4.0"
+    instance_count         = 1
+  }
+}
