@@ -40,3 +40,29 @@ docdb = {
     instance_count         = 1
   }
 }
+
+elasticache = {
+  main = {
+    engine                 = "redis"
+    engine_version         = "6.2"
+    node_type              = "cache.t3.micro"
+    parameter_group_family = "redis6.x"
+    num_cache_nodes        = 1
+  }
+}
+
+rabbitmq = {
+  main = {
+    instance_type = "t3.small"
+  }
+}
+
+rds = {
+  main = {
+    allocated_storage      = 20
+    engine                 = "mysql"
+    engine_version         = "5.7.44"
+    instance_class         = "db.m5.large"
+    parameter_group_family = "mysql5.7"
+  }
+}

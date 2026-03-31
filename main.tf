@@ -55,3 +55,65 @@ module "docdb" {
 
 
 }
+
+module "rds" {
+ source = "git::https://github.com/krndevops/tf-module-rds.git"
+
+ for_each               = var.rds
+ allocated_storage      = each.value["allocated_storage"]
+ engine                 = each.value["engine"]
+ engine_version         = each.value["engine_version"]
+ instance_class         = each.value["instance_class"]
+ parameter_group_family = each.value["parameter_group_family"]
+
+ env  = var.env
+ tags = {}
+ kms  = var.kms_key_id
+ project_name = var.project_name
+
+ subnets  = lookup(lookup(module.vpc, "main", null), "db_subnets_ids", null)
+ vpc_id   = lookup(lookup(module.vpc, "main", null), "vpc_id", null)
+ sg_cidrs = lookup(lookup(var.vpc, "main", null), "app_subnets_cidr", null)
+
+}
+
+
+module "elasticache" {
+ source = "git::https://github.com/krndevops/tf-module-elasticache.git"
+
+ for_each               = var.elasticache
+ num_cache_nodes        = each.value["num_cache_nodes"]
+ engine                 = each.value["engine"]
+ engine_version         = each.value["engine_version"]
+ node_type              = each.value["node_type"]
+ parameter_group_family = each.value["parameter_group_family"]
+
+ env  = var.env
+ tags = {}
+ kms  = var.kms_key_id
+ project_name = var.project_name
+
+ subnets  = lookup(lookup(module.vpc, "main", null), "db_subnets_ids", null)
+ vpc_id   = lookup(lookup(module.vpc, "main", null), "vpc_id", null)
+ sg_cidrs = lookup(lookup(var.vpc, "main", null), "app_subnets_cidr", null)
+
+}
+
+module "rabbitmq" {
+ source = "git::https://github.com/krndevops/tf-module-rabbitmq.git"
+
+ for_each      = var.rabbitmq
+ instance_type = each.value["instance_type"]
+
+ env             = var.env
+ tags            = {}
+ kms             = var.kms_key_id
+ bastion_cidrs   = var.bastion_cidrs
+ route53_zone_id = var.zone_id
+ project_name = var.project_name
+
+ subnets  = lookup(lookup(module.vpc, "main", null), "db_subnets_ids", null)
+ vpc_id   = lookup(lookup(module.vpc, "main", null), "vpc_id", null)
+ sg_cidrs = lookup(lookup(var.vpc, "main", null), "app_subnets_cidr", null)
+
+}
