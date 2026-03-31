@@ -20,7 +20,7 @@ vpc = {
 eks = {
   main = {
     node_groups = {
-      main = {
+      n1 = {
 
         size = 1
         instance_types = ["t3.large"]
