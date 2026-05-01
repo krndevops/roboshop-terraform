@@ -49,7 +49,7 @@ pipelines:
 
                 - exec:
                     command: sleep
-                    arguments: [ "120" ]
+                    arguments: [ "60" ]
 
                 - exec:
                     command: terraform
