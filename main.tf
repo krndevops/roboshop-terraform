@@ -21,15 +21,33 @@ module "eks" {
   source       = "git::https://github.com/krndevops/tf-module-eks.git"
   for_each     = var.eks
 
-
   env          = var.env
   component    = "eks"
   project_name = var.project_name
   subnet_ids   = lookup(lookup(module.vpc, "main", null), "app_subnets_id", null)
   node_groups  = each.value["node_groups"]
+}
 
+#################################################
+# ADD BELOW THIS
+#################################################
 
+data "aws_eks_cluster_auth" "main" {
+  name = module.eks["main"].cluster_name
+}
 
+provider "kubernetes" {
+  host                   = module.eks["main"].cluster_endpoint
+  cluster_ca_certificate = base64decode(module.eks["main"].cluster_certificate_authority_data)
+  token                  = data.aws_eks_cluster_auth.main.token
+}
+
+provider "helm" {
+  kubernetes = {
+    host                   = module.eks["main"].cluster_endpoint
+    cluster_ca_certificate = base64decode(module.eks["main"].cluster_certificate_authority_data)
+    token                  = data.aws_eks_cluster_auth.main.token
+  }
 }
 
 
