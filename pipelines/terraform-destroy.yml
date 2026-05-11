@@ -60,43 +60,46 @@ pipelines:
                         "-auto-approve"
                       ]
 
-#      - PROD:
-#          fetch_materials: true
-#          clean_workspace: false
-#
-#          jobs:
-#            deployment:
-#              timeout: 0
-#
-#              tasks:
-#
-#                - exec:
-#                    command: terraform
-#                    arguments:
-#                      [
-#                        "init",
-#                        "-backend-config=env-prod/state.tfvars"
-#                      ]
-#
-#                - exec:
-#                    command: terraform
-#                    arguments:
-#                      [
-#                        "destroy",
-#                        "-target=module.eks",
-#                        "-var-file=env-prod/main.tfvars",
-#                        "-auto-approve"
-#                      ]
-#
-#                - exec:
-#                    command: sleep
-#                    arguments: [ "120" ]
-#
-#                - exec:
-#                    command: terraform
-#                    arguments:
-#                      [
-#                        "destroy",
-#                        "-var-file=env-prod/main.tfvars",
-#                        "-auto-approve"
-#                      ]
+      - PROD:
+          fetch_materials: true
+          clean_workspace: false
+
+          approval:
+            type: manual
+
+          jobs:
+            deployment:
+              timeout: 0
+
+              tasks:
+
+                - exec:
+                    command: terraform
+                    arguments:
+                      [
+                        "init",
+                        "-backend-config=env-prod/state.tfvars"
+                      ]
+
+                - exec:
+                    command: terraform
+                    arguments:
+                      [
+                        "destroy",
+                        "-target=module.eks",
+                        "-var-file=env-prod/main.tfvars",
+                        "-auto-approve"
+                      ]
+
+                - exec:
+                    command: sleep
+                    arguments: [ "20" ]
+
+                - exec:
+                    command: terraform
+                    arguments:
+                      [
+                        "destroy",
+                        "-var-file=env-prod/main.tfvars",
+                        "-auto-approve"
+                      ]
